@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content ="width = device-width, initial-scale = 1"> 
+    <title>Crytocurrency Staking</title>
+    <style type = "text/css">
+        .logo {
+            position:static;
+            width: 12%;
+            float: left;
+            margin-top: -140px;
+        }
+
+        nav {
+        margin-bottom: 150px;
+        border:25px;
+        background-color: #1f1e1d;
+        }
+
+        #italic {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color:brown;
+            font-style: italic;
+            text-shadow: 1px;
+        }
+        .hero_image {
+            width: 20%;
+            margin-left: 200px;
+            display: inline;
+        }
+
+        .Getstarted {
+            display:inline;
+            float:left;
+            margin-left: -5px;
+        }
+
+        .image {
+            display: inline;
+        }
+
+        ._Buytoken {
+            border-radius: 15px;
+            margin-left: -5px;
+            width: 385px;
+            height: 50px;
+            font-weight: bold;
+        }
+
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: 25px;
+        }
+
+        .text {
+            text-align: center;
+        }
+
+        ._text_ {
+            text-align: center;
+        }
+
+        button {
+            background-color: rgb(29, 28, 28); color: white;
+            height: 29px;
+            border-radius: 15px;
+        }
+
+        input {
+            border-color: #1f1e1d; opacity: 20;
+            width: 20%;
+            height: 25px;
+        }
+
+        #first {
+            text-align: center;
+            background-color: rgb(99, 64, 12); color: white;
+            line-height: 50px;
+        }    
+
+        .second {
+            text-align: center;
+            background-color: rgb(99, 64, 12); color: white;
+        }
+
+        .third {
+            text-align: center;
+            background-color: rgb(99, 64, 12); color: white;  
+        }
+
+        .fourth {
+            background-color: rgb(99, 64, 12); color: white;
+            text-align: center;
+        }
+
+        .clickable {
+            background-color: rgb(17, 14, 14); color: white;
+            font-weight: bold;
+            text-decoration: underline;
+            border-radius: 15px;
+            height:auto;
+            width:fit-content;
+            box-shadow: 6px;
+            float: centre;
+        }
+
+        .onlyID {
+            text-align: center;
+        }
+    </style>
+    <script type = "text/javascript" src = 'node_modules/web3/dist/web3.min.js'>
+
+    async function loadWeb3() {
+        if (window.ethereum) {
+                    window.web3 = new Web3(window.ethereum);
+                    window.ethereum.enable();
+        }
+    }
+
+    async function load() {
+        await loadWeb3();
+    }    
+
+    load();
+
+    async function loadContract() {
+        return await new window.web3.eth.Contract([
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+    ], "0x5F3812528Ab80D6Ef8F71A85F484BE2A9C3bd974");
+    }  
+
+    async function load() {
+        await loadWeb3();
+        window.contract = await loadContract();
+    }
+
+    async function viewBalance () {
+        const stakingBalance = await window.contract.methods.stakingBalance[staker]().call();
+    }
+
+    async function allTransactions () {
+        const vintageTokens= await window.contract.methods.vintageTokens().call();
+    }
+
+    async function Buytoken () {
+        const account = await getCurrentAccount();
+        const _mint= await window.contract.methods._mint(amount).send({ from: account });
+    }
+
+    async function _stake () {
+        const account = await getCurrentAccount();
+        const transferFrom= await window.contract.methods.transferFrom(amount).send({ from: account });
+    }
+
+    async function wallet () {
+        const account = await getCurrentAccount();
+        const transfer= await window.contract.methods.transfer(reward).send({ to: account });
+    }
+    
+    async function getCurrentAccount() {
+        const accounts = await window.web3.eth.getAccounts();
+        return accounts[0];
+    }
+
+    </script>
+
+</head>
+
+<body>
+    <nav>
+        <span class = "logo"> <a href="index.html">
+             <img src = "https://ipfs.io/ipfs/QmTWDAC7urSCFAXYiny7gibMkxZwU8xJdCVYMbT1CyLjv9?filename=Group%201.png" alt = "logo" width = "100%"></a> 
+    </nav>
+    <div class = "Getstarted">
+        <h1>Earn <span id = "italic"> hooge rewards </span> by<br/>staking Vintage tokens. </h1> 
+        Get started to buy $VIT tokens to stake. <br/>Secure and fast payouts! <br/><br/><button type ="button" class = "_Buytoken" onclick="Buytoken ()" style="background-color: rgb(32, 31, 31)" width="70px!">Get Started</button>
+    </div>
+    <div class = "image"><img src = "https://ipfs.io/ipfs/QmdXNoqLmey72zCprgBWLKpRcDWYXnrwnN97NTn3CCMzM5" alt = "hero image" class = "hero_image"></div>
+
+    <section id="first"><h2><strong>About</strong></h2></section>
+
+        Staking is a great way to maximize your holdings by staking cryptocurrencies that would otherwise be sitting in your digital wallet. Once you have staked your assets, you can earn staking rewards on top of your holdings and grow them further by compounding those future rewards.<br/><br/>
+        Vintage-crypto is a staking project officially licensed by Blockgames in partnership with Zuri Team that is leveraging blockchain technology to empower her users to earn "hooge" rewards while staking all or part of their tokens. Rewards are paid out in native token; $VIT weekly and users who do not claim their rewards as and when due will effectively lose them for that week. Currently, our native token $VIT is valued at <strong>0.1ETH.</strong><br/><br/>
+        
+        <div class = "text">
+            <section class ="second"><h2><strong>Stake your $VIT</strong></h2></section>
+            Enter the amount in the input field and stake your $VIT just by clicking on the stake button.<br/><br/>
+            <input type ="text" value = "$VIT 10" name = "tokenamount"/> &nbsp; <button onclick="_stake ()">Stake</button>
+        </div> <br/><br/>   
+
+        <div class = "_text_">
+            <section class = "third"><h2><strong>Claim your rewards</strong></h2></section>
+             Vintage-crypto pays you 1% of your staked tokens every week to compound your holdings.<br/><br/>
+            <input type ="text" value = "Enter wallet address" name = "wallet"/> &nbsp; <button onclick="wallet ()">Claim</button>
+        </div><br/><br/>    
+        
+            <section class = "fourth"><h2><strong>Number of Tokens staked (weekly)</strong></h2></div></body></section>
+        <table>
+            <thead>
+            <tr>
+                <th>Wallet Address (Staker)</th>
+                <th>Amount Staked($VIT)</th>
+                <th>Timestamp</th>
+                <th>Reward</th>
+            </tr> 
+            </thead>
+            <tbody>
+            <tr>
+                <td>0x00CC46c1728a6275173747259848E2fA9E112853</td>
+                <td>50</td>
+                <td>08:30</td>
+                <td>1%</td>
+            </tr>
+            <tr>
+                <td>0x00CC46c1728a6275173747259848E2fA9E150053</td>
+                <td>500</td>
+                <td>12:05</td>
+                <td>1%</td>
+            </tr>
+            <tr>
+                <td>0x00CC46c1728a6275173747259848E2fA12212853</td>
+                <td>122</td>
+                <td>14:15</td>
+                <td>1%</td>
+            </tr>
+            <tr>
+                <td>0x00CC46c1728a6275173747252258E2fA9E112853</td> 
+                <td>225</td>
+                <td>23:11</td>
+                <td>1%</td>
+            </tr>
+            </tbody>
+
+        </table> <button onclick="allTransactions ()">Verify on Etherscan</button><br/><br/>
+
+        <div class= "onlyID"><h3><strong>Some of the Frequently Asked Questions (FAQS):</strong></h3><hr/></div><br/>
+        <ul>
+            <li><mark>I have just staked, how can I check my token balance?</mark></li><br/>
+                 Please kindly enter your wallet address in the input field below. <br/><br/>
+               <input type = "text" value = "Address of staker"/> &nbsp;<button onclick = "viewBalance ()"> Token Balance</button> <br/><br/>
+
+            <li><mark>I want to transfer my tokens. I just finished staking now.</mark></li><br/>
+                You can only have access to your tokens when you claim your rewards. Tokens are automatically locked for 7 days maximum duration after staking is established.<br/><br/>
+
+            <li><mark>I want to work with you. I think you have a great potential. How can I reach out to you?</mark></li><br/>
+                Thank you so much for the kind words. You can send me an email: <strong>israel_abazie@outlook.com </strong> or via my Linkedin profile <strong><a href="https://www.linkedin.com/in/israel-abazie-4a326b75" target="_blank">Linkedin Profile</a></strong>
+        </ul>  
+        
+        
+
+           
+</body>
+
+</html>
